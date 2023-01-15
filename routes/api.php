@@ -29,18 +29,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/delete_user/{id}', [App\Http\Controllers\API\AuthController::class, 'deleteuser']);
 
     Route::get('/get_book', [App\Http\Controllers\API\BookController::class, 'get_book']);
-    Route::post('/create_book', [App\Http\Controllers\API\BookController::class, 'create_book']);
-    // Route::post('/update_book/{id_buku}', [App\Http\Controllers\API\BookController::class, 'update_book']);
-    Route::post('/update_book', [App\Http\Controllers\API\BookController::class, 'update_book']);
+    Route::post('/create_book', [App\Http\Controllers\API\BookController::class, 'create']);
+    Route::post('/update_book/{id_buku}', [App\Http\Controllers\API\BookController::class, 'update']);
     Route::get('/delete_book/{id_buku}', [App\Http\Controllers\API\BookController::class, 'destroy']);
     Route::get('/get_book_by_id/{id_buku}', [App\Http\Controllers\API\BookController::class, 'get_book_by_id']);
 
-
-
-
-    Route::get('/get_barang', [App\Http\Controllers\API\BarangController::class, 'get_book']); 
-    // Route::post('barang', [BarangController::class, 'store']); 
-    Route::get('barang/{barang}', [BarangController::class, 'show']); 
-    Route::put('barang/{barang}', [BarangController::class, 'update']); 
-    Route::delete('barang/{barang}', [BarangController::class, 'destory']); 
+    Route::get('/get_transaksi', [App\Http\Controllers\API\TransaksiController::class, 'index']);
+    Route::post('/create_transaksi', [App\Http\Controllers\API\TransaksiController::class, 'create']);
 });
