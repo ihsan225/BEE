@@ -15,7 +15,6 @@ class BookController extends Controller
     public function index()
     {
         $data = Book::get();
-
         $output = array(
             'error' => false,
             'msg' => 'Data Berhasil Ditampilkan',
@@ -30,11 +29,24 @@ class BookController extends Controller
             'kode_buku' => 'required|string|max:255',
             'judul_buku' => 'required|string|max:255',
             'genre_buku' => 'required|string|max:255',
+            // 'gambar' => 'required|image'
         ]);
 
-        Book::create($request->all());
+        // $gambar = $request->file('gambar')->create('barang','public');
 
-        return response()->json(['book' => Book::all()]);
+        // Book::create($request->all());
+        $data = Book::create([
+            'kode_buku' => $request ->kode_buku,
+            'judul_buku' => $request ->judul_buku,
+            'genre_buku' => $request ->genre_buku,
+            // 'gambar' => $gambar
+        ]);
+
+        return response()->json([
+            'message' => 'Berhasil menambah buku',
+            'data' => $data
+        ], 200 );
+        // return response()->json(['book' => Book::all()]);
     }
 
 
@@ -57,6 +69,14 @@ class BookController extends Controller
             'judul_buku' => 'required|string|max:255',
             'genre_buku' => 'required|string|max:255',
         ]);
+
+        // if ($request->gambar){
+        //     Storage::delete('/public/' .$book ->gambar);
+        //     $gambar = $request->file('gambar')->create('barang',"public");
+        // } else{
+        //     $gambar =$book->gambar;
+        // }
+
         $update = Book::where('id_buku', $request->id_buku)->update($request->all());
         if ($update) {
             return response()->json(['msg' => 'update data successfully']);
@@ -65,6 +85,7 @@ class BookController extends Controller
 
     public function destroy($id_buku)
     {
+        // Storage::delete('/public' . $data->gambar);
         $del = Book::where('id_buku', $id_buku)->delete();
         if ($del) {
             return response()->json(['msg' => 'delete data successfully']);
